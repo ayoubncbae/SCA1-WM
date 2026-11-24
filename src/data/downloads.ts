@@ -1,0 +1,7 @@
+import type {RunResult,Manifest,Observed} from '../types';
+export function download(name:string,text:string,type='text/plain'){const url=URL.createObjectURL(new Blob([text],{type}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),2000);}
+function csvCell(x:unknown){const s=String(x??'');return /[",\n]/.test(s)?'"'+s.replaceAll('"','""')+'"':s;}
+export function toCSV(rows:unknown[][]){return rows.map(row=>row.map(csvCell).join(',')).join('\n');}
+export function trajectoryCSV(r:RunResult,m:Manifest,genes:string[]){const ix=genes.map(g=>m.genes.indexOf(g));return toCSV([['model_id','cell_type','genotype','age','route','role','gene','mean_log_expression','mean_CP10K'],...r.states.flatMap(s=>ix.map((j,i)=>[m.id,m.cellTypes[r.config.type],s.genotype,s.age,r.config.route,s.role,genes[i],s.meanLog[j],s.cp10k[j]]))]);}
+export function observedCSV(o:Observed,m:Manifest,genes:string[]){return toCSV([['cell_type','genotype','age','n_mice','gene','mean_log_expression','mean_CP10K'],...o.entries.flatMap(s=>genes.map(g=>{const j=m.genes.indexOf(g);return [m.cellTypes[o.type],s.genotype,s.age,s.nMice,g,s.meanLog[j],s.cp10k[j]];}))]);}
+export function countCSV(r:RunResult,m:Manifest,genes:string[]){return toCSV([['nucleus','technical_library',...genes],...r.sample.counts.map((row,i)=>[i,r.sample.libraries[i],...genes.map(g=>row[m.genes.indexOf(g)])])]);}

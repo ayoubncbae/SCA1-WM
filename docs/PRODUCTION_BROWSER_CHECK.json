@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "productionBuild": true,
+  "liveNeuralInference": true,
+  "neuralWeight": 0.5,
+  "pageErrors": [],
+  "screenshots": [
+    "production-overview-desktop.png",
+    "production-simulator-desktop.png"
+  ]
+}

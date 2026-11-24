@@ -1,0 +1,2 @@
+export const colors={WT:'#247aab',SCA1:'#d77639',obsWT:'#68b5d4',obsSCA1:'#e6ad7b'};
+export const base={animation:false,backgroundColor:'#fff',textStyle:{fontFamily:'Inter, system-ui, sans-serif',color:'#527086',fontSize:11},grid:{left:58,right:25,top:65,bottom:46},tooltip:{trigger:'axis'},legend:{top:3,textStyle:{fontSize:10}},xAxis:{type:'value',name:'Age (weeks)',nameLocation:'middle',nameGap:27,min:5,max:30,splitLine:{show:false}},yAxis:{type:'value',name:'Expression',splitLine:{lineStyle:{color:'#edf2f6'}}}};

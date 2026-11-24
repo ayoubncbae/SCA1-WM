@@ -1,0 +1,11 @@
+import {chromium,expect} from '@playwright/test';
+import {writeFile} from 'node:fs/promises';
+const browser=await chromium.launch({headless:true,executablePath:process.env.PLAYWRIGHT_EXECUTABLE_PATH});
+const page=await browser.newPage({viewport:{width:1440,height:1000}});const errors=[];page.on('pageerror',e=>errors.push(e.message));
+await page.goto('http://127.0.0.1:4174/');await expect(page.getByRole('heading',{name:/A molecular view/})).toBeVisible();await expect.poll(()=>page.locator('.hero-visual svg path').count()).toBeGreaterThan(100);
+await page.screenshot({path:'screenshots/production-overview-desktop.png',fullPage:true});
+await page.getByRole('button',{name:/Open world model simulator/}).click();await page.getByRole('button',{name:'Run World Model Simulation',exact:true}).click();await expect(page.getByTestId('results')).toBeVisible({timeout:30000});
+await expect(page.getByText(/Live browser run complete/)).toBeVisible();await expect(page.getByText(/active.*0.5/i).first()).toBeVisible();await page.evaluate(()=>{scrollTo(0,0);document.querySelector('.desktop-controls')?.scrollTo(0,0);});await page.screenshot({path:'screenshots/production-simulator-desktop.png',fullPage:false});
+if(errors.length)throw Error(errors.join('\n'));
+await writeFile('docs/PRODUCTION_BROWSER_CHECK.json',JSON.stringify({status:'PASS',productionBuild:true,liveNeuralInference:true,neuralWeight:.5,pageErrors:errors,screenshots:['production-overview-desktop.png','production-simulator-desktop.png']},null,2));
+await browser.close();console.log('Production build browser smoke test PASS; neural simulation executed.');

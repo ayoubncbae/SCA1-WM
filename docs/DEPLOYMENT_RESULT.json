@@ -1,0 +1,12 @@
+{
+  "status": "succeeded",
+  "url": "https://sca1-wm-transcriptomic-lab.starryboar67.chatgpt.site",
+  "audience": "owner-private",
+  "project_id": "appgprj_6b0513bdf3008191a2975c504b0be7b9",
+  "deployment_id": "appgdep_6b0520f6424881918905c1b399f2fdda",
+  "version_id": "appgprj_6b0513bdf3008191a2975c504b0be7b9~appgver_f73c3922e498819181c74628f04a1b3e",
+  "source_commit": "5febe3e6e7b1f7fdd15e2789139b7d8f0ee0170d",
+  "model": "primary V7 grouped_1 neural ensemble",
+  "neuralWeight": 0.5,
+  "verification": "Native Sites deployment succeeded; production browser inference and workflow tested locally before publication"
+}

@@ -1,0 +1,11 @@
+export type Genotype='WT'|'SCA1';
+export type Route='direct'|'recursive';
+export interface Program{requested:string[];present:string[];missing:string[]}
+export interface Manifest{id:string;title:string;mode:string;modelVersion:string;cellTypes:string[];genes:string[];programs:Record<string,Program>;measuredAges:number[];queriedAges:number[];sourceAges:number[];neuralWeight:number;checkpointFiles:{id:string;sha256:string}[];genePanelSha256:string;preprocessorSha256:string;scope:string;[key:string]:unknown}
+export interface NeuralModel{config:{dim:number;width:number;depth:number};weights:Record<string,number[]|number[][]>}
+export interface Schema{modelId?:string;genePanelSha256?:string;checkpointHashes?:string[];rowCount:number;channels:number;genes:number;latent:number;rows:{type:number;genotype:Genotype;age:number}[];kernel:{width:number;shrink:number};theta:number[][];libraries:number[][];encoder:{meanOffset:number;scaleOffset:number;basisOffset:number};files:Record<string,string>;neuralWeight:number;neural:NeuralModel[];sources:Record<string,{age:number;latent:number[];tokens:number[][]}>}
+export interface Model{manifest:Manifest;schema:Schema;training:Float32Array;encoder:Float32Array}
+export interface RunConfig{type:number;genotype:Genotype;sourceAge:number;targetAge:number;route:Route;steps:number[];nuclei:number;seed:number}
+export interface State{age:number;genotype:Genotype;meanLog:number[];cp10k:number[];role:'retrospective_reconstruction'|'animal_disjoint_prediction'|'unmeasured_prediction'}
+export interface RunResult{config:RunConfig;states:State[];sourceLatent:number[];sample:{counts:number[][];libraries:number[]};metadata:{modelId:string;genePanel:string;mode:string;neuralWeight:number;routeEffect:string;checkpointIds:string[];elapsedMs:number};stages:string[]}
+export interface Observed{type:number;role:string;scale:string;entries:{genotype:Genotype;age:number;nMice:number;nNuclei:number;meanLog:number[];cp10k:number[]}[]}
